@@ -37,13 +37,14 @@
 
 ### 2. rknntoolkit2-regtask-decode.py
 
-解析转换模型时出现的`E RKNN: [10:48:24.306] REGTASK: The bit width of field value exceeds the limit`这类错误信息。快速查看到底是哪里超出了范围。
-`E RKNN: [10:48:24.306] REGTASK: The bit width of field value exceeds the limit, target: v2, offset: 0x500c, shift = 0, limit: 0x1fff, value: 0x3fff // DPU_RDMA rdma_data_cube_width.width: value=16383 > 8191`
+解析转换模型时出现的`REGTASK: The bit width of field value exceeds the limit`这类错误信息，快速查看到底是哪里超出了范围。  
+如: `E RKNN: [10:48:24.306] REGTASK: The bit width of field value exceeds the limit, target: v2, offset: 0x500c, shift = 0, limit: 0x1fff, value: 0x3fff // DPU_RDMA rdma_data_cube_width.width: value=16383 > 8191`
 
-推荐用法:
+推荐用法(可以定位是哪个算子导致的问题):
 ```bash
 export RKNN_LOG_LEVEL=999
 rm convert.log
 python ./convert.py >> convert.log 2>>convert.log
 cat ./convert.log | python rknntoolkit2-regtask-decode.py > convert.decoded.log
 ```
+
